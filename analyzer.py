@@ -60,13 +60,17 @@ def analyze_document(text: str) -> DocumentAnalysis:
         },
     )
     raw_output = completion.choices[0].message.content
+    print(raw_output)  # test
     return DocumentAnalysis.model_validate_json(raw_output)
 
 
 def main():
 
     # Example usage
-    example_text = "The company reported a 20% increase in sales this quarter, driven by strong performance in the marketing department."
+    example_text = (
+        "The company reported a 20% increase in sales this quarter,"
+        "driven by strong performance in the marketing department."
+    )
 
     try:
         result = analyze_document(example_text)
