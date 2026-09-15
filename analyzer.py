@@ -60,7 +60,6 @@ def analyze_document(text: str) -> DocumentAnalysis:
         },
     )
     raw_output = completion.choices[0].message.content
-    print(raw_output)  # test
     return DocumentAnalysis.model_validate_json(raw_output)
 
 

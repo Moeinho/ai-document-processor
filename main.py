@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import ValidationError
+from openai import OpenAIError
 from analyzer import DocumentAnalysis, analyze_document
 from schema import DocumentRequest
 import json
@@ -18,14 +19,13 @@ def analyze_document_endpoint(request: DocumentRequest):
         raise HTTPException(
             status_code=502, detail="AI model returned an invalid response."
         )
-    except Exception:
+    except OpenAIError:
         raise HTTPException(
             status_code=503, detail="AI service is temporarily unavailable."
         )
 
 
 # additional endpoints for document storage and analysis
-
 
 @app.post("/documents")
 def create_document(request: DocumentRequest):
@@ -61,7 +61,7 @@ def analyze_stored_document(doc_id: int):
         raise HTTPException(
             status_code=502, detail="AI model returned an invalid response."
         )
-    except Exception:
+    except OpenAIError:
         raise HTTPException(
             status_code=503, detail="AI service is temporarily unavailable."
         )
